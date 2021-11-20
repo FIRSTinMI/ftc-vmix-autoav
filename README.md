@@ -2,7 +2,7 @@
 A quick solution to switch inputs in vMix based on which field is currently active
 
 #### Setup
-0. Setup an input in vMix that corresponds to each field that you have. Make note of the input numbers.
+0. Setup input(s) in vMix that corresponds to each field that you have. Make note of the input numbers.
 1. Download the [latest binaries from the release page](https://github.com/Techno11/ftc-vmix-autoav/releases/latest) based on your OS
 2. Run the downloaded binary
 3. Follow the setup instructions in the launched application
