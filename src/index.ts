@@ -58,7 +58,7 @@ async function setup() {
       config = JSON.parse(file);
     } catch (err) {
       // Probably no file
-      console.log('No config file fount... Starting from scratch!');
+      console.log('No config file found... Starting from scratch!');
     }
     if(config.ftc_ip) {
       const input = await prompt(`Scorekeeper IP is '${config.ftc_ip}' (Y/n)`, false);
@@ -102,6 +102,7 @@ async function setup() {
             console.log('API Key Approved');
           } else {
             console.warn('API Key Auth denied :(. This may cause problems with polling!');
+            await blockingApiKeyReq();
           }
         }
       } catch {
