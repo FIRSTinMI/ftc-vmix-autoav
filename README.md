@@ -19,3 +19,4 @@ Issues with the app? There are a few troubleshooting steps
 * Ensure the API username/password are set to the default, and that the API is enabled:
     * Open settings in the upper right of vMix, and go to "Web Controller" options. Ensure that "Enabled" is checked.
     * In the same window, ensure that the username is "admin" and the set password is also "admin".  If you feel this is a security risk, you can create [an issue](https://github.com/Techno11/ftc-vmix-autoav/issues/new) and there may be an option added in the future.
+
