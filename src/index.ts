@@ -102,12 +102,18 @@ async function setup() {
             console.log('API Key Approved');
           } else {
             console.warn('API Key Auth denied :(. This may cause problems with polling!');
-            await blockingApiKeyReq();
+            config.ftc_api_key = null;
+            config.api_authed = false;
           }
         }
       } catch {
         console.warn('API Key invalid, or error fetching key. Requesting new key!');
+        config.ftc_api_key = null;
+        config.api_authed = false;
       }
+    }
+    if(!config.ftc_api_key) {
+      config.ftc_api_key = await blockingApiKeyReq();
     }
     if(config.ftc_event_code) {
       const input = await prompt(`FTC Event code is '${config.ftc_event_code}' (Y/n)`, false);
@@ -116,9 +122,6 @@ async function setup() {
     if(!config.ftc_event_code) {
       // TODO: query avaliable ftc events and make list
       config.ftc_event_code = await prompt(`Please enter FTC event code: `);
-    }
-    if(!config.ftc_api_key) {
-      config.ftc_api_key = await blockingApiKeyReq();
     }
     if(config.av_ip) {
       const input = await prompt(`VMix IP is '${config.av_ip}' (Y/n)`, false);

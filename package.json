@@ -1,7 +1,7 @@
 {
   "name": "fim-ftc-vmix-switcher",
-  "version": "0.0.1",
-  "description": "App to Control Vmix Video Output from FTC Scorekeeper's API",
+  "version": "0.0.3",
+  "description": "App to Control vMix Video Output from FTC Scorekeeper's API",
   "main": "dist/index.js",
   "scripts": {
     "dev": "npm run build && npm run run",
@@ -25,6 +25,7 @@
     "typescript": "^4.5.2"
   },
   "devDependencies": {
+    "@types/node": "^18.11.10",
     "@types/prompt": "^1.1.1"
   }
 }

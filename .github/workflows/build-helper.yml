@@ -19,14 +19,17 @@ jobs:
         include:
           - os: ubuntu-latest
             artifact_name: autoav-ftc-linux
+            artifact_extension:
             asset_name: autoav-ftc-linux
             cmd: build-linux
           - os: windows-latest
-            artifact_name: autoav-ftc-windows.exe
+            artifact_name: autoav-ftc-windows
+            artifact_extension: .exe
             asset_name: autoav-ftc-windows-amd64.exe
             cmd: build-win
           - os: macos-latest
             artifact_name: autoav-ftc-mac
+            artifact_extension:
             asset_name: autoav-ftc-macos-amd64
             cmd: build-mac
 
@@ -41,10 +44,16 @@ jobs:
         npm ci
         npm run build
         npm run ${{ matrix.cmd }}
+    - name: Set env
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+    - name: Test
+      run: |
+        echo $RELEASE_VERSION
+        echo ${{ env.RELEASE_VERSION }}
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: bin/${{ matrix.artifact_name }}
-        asset_name: ${{ matrix.asset_name }}
+        asset_name: ${{ matrix.asset_name }}_v${{ env.RELEASE_VERSION}}${{ matrix.artifact_extension }}
         tag: ${{ github.ref }}
