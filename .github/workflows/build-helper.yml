@@ -19,17 +19,17 @@ jobs:
         include:
           - os: ubuntu-latest
             artifact_name: autoav-ftc-linux
-            artifact_extension:
+            asset_extension:
             asset_name: autoav-ftc-linux
             cmd: build-linux
           - os: windows-latest
-            artifact_name: autoav-ftc-windows
-            artifact_extension: .exe
-            asset_name: autoav-ftc-windows-amd64.exe
+            artifact_name: autoav-ftc-windows.exe
+            asset_name: autoav-ftc-windows-amd64
+            asset_extension: .exe
             cmd: build-win
           - os: macos-latest
             artifact_name: autoav-ftc-mac
-            artifact_extension:
+            asset_extension:
             asset_name: autoav-ftc-macos-amd64
             cmd: build-mac
 
@@ -55,5 +55,5 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: bin/${{ matrix.artifact_name }}
-        asset_name: ${{ matrix.asset_name }}_v${{ env.RELEASE_VERSION}}${{ matrix.artifact_extension }}
+        asset_name: ${{ matrix.asset_name }}_${{ env.RELEASE_VERSION}}${{ matrix.asset_extension }}
         tag: ${{ github.ref }}
