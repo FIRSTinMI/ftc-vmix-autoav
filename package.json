@@ -1,31 +1,33 @@
 {
-  "name": "fim-ftc-vmix-switcher",
-  "version": "0.0.3",
-  "description": "App to Control vMix Video Output from FTC Scorekeeper's API",
-  "main": "dist/index.js",
-  "scripts": {
-    "dev": "npm run build && npm run run",
-    "run": "node dist/index.js",
-    "build": "tsc",
-    "build-win": "nexe dist/index.js -t windows-x64-14.15.3 -o bin/autoav-ftc-windows.exe",
-    "build-mac": "nexe dist/index.js -t mac-x64-14.15.3 -o bin/autoav-ftc-mac",
-    "build-linux": "nexe dist/index.js -t linux-x64-14.15.3 -o bin/autoav-ftc-linux"
-  },
-  "keywords": [
-    "ftc",
-    "scorekeeper",
-    "vmix"
-  ],
-  "author": "Soren Zaiser",
-  "license": "MIT",
-  "dependencies": {
-    "got": "^11.8.3",
-    "nexe": "^4.0.0-beta.19",
-    "prompt": "^1.2.0",
-    "typescript": "^4.5.2"
-  },
-  "devDependencies": {
-    "@types/node": "^18.11.10",
-    "@types/prompt": "^1.1.1"
-  }
+    "name": "fim-ftc-vmix-switcher",
+    "version": "0.1.0",
+    "description": "App to Control vMix Video Output from FTC Scorekeeper's API",
+    "main": "dist/index.js",
+    "scripts": {
+        "dev": "npm run build && npm run run",
+        "run": "node dist/index.js",
+        "build": "tsc",
+        "build-win": "nexe dist/index.js -t windows-x64-14.15.3 -o bin/autoav-ftc-windows.exe",
+        "build-mac": "nexe dist/index.js -t mac-x64-14.15.3 -o bin/autoav-ftc-mac",
+        "build-linux": "nexe dist/index.js -t linux-x64-14.15.3 -o bin/autoav-ftc-linux"
+    },
+    "keywords": [
+        "ftc",
+        "scorekeeper",
+        "vmix"
+    ],
+    "author": "Soren Zaiser",
+    "license": "MIT",
+    "dependencies": {
+        "got": "^11.8.3",
+        "nexe": "^4.0.0-beta.19",
+        "prompt": "^1.2.0",
+        "typescript": "^4.5.2",
+        "ws": "^8.15.0"
+    },
+    "devDependencies": {
+        "@types/node": "^18.11.10",
+        "@types/prompt": "^1.1.1",
+        "@types/ws": "^8.5.10"
+    }
 }
