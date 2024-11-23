@@ -24,7 +24,7 @@ async function start() {
 
         let json = JSON.parse(data);
 
-        if (json.type === 'SHOW_PREVIEW') {
+        if (['SHOW_PREVIEW', 'SHOW_MATCH'].includes(json.type) && json.params.field !== lastField) {
             console.log(`Now on field ${json.params.field}`);
             dispatchVmix(json.params.field);
             lastField = json.params.field;
