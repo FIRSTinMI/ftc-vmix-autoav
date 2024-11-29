@@ -12,25 +12,76 @@ setup().then(() => {
     start()
 });
 
+type Message = {
+    type: string;
+    ts: number;
+    params: {
+        field: number
+    }
+};
+
 async function start() {
     console.log('Starting...')
     let lastField = -1;
     const ws = new WebSocket(`ws://${config.ftc_ip}:${config.ftc_port}/stream/display/command/?code=${config.ftc_event_code}`);
+    let messageQueue: Message[] = [];
+    let processing = false;
 
     ws.on('error', console.error);
 
-    ws.on('message', (data: string) => {
+    ws.on('message', async (data: string) => {
         if (data == 'pong') return;
 
-        let json = JSON.parse(data);
+        let json = JSON.parse(data) as Message;
 
-        if (['SHOW_PREVIEW', 'SHOW_MATCH'].includes(json.type) && json.params.field !== lastField) {
-            console.log(`Now on field ${json.params.field}`);
-            dispatchVmix(json.params.field);
-            lastField = json.params.field;
+        if (['SHOW_PREVIEW', 'SHOW_MATCH'].includes(json.type)) {
+            messageQueue.push(json);
+
+            if (!processing) {
+                await processMessagesWhenIdle();
+            }
         }
-
     });
+
+    const vmixTransitionTime = 1500;
+    let lastChange = +new Date() - vmixTransitionTime;
+    let lastMessage = {
+        ts: 0,
+        params: {
+            field: lastField
+        }
+    }
+
+    async function processMessagesWhenIdle() {
+        processing = true;
+
+        setTimeout(async () => {
+            const now = +new Date();
+            if (messageQueue.length === 0 && now - lastChange > vmixTransitionTime) {
+                lastChange = +new Date();
+                processing = false; // Avoid race condition if a message comes in while changing fields
+                return await changeField(lastMessage);
+            }
+            while (messageQueue.length > 0) {
+                const json = messageQueue.shift()!;
+                if (json.ts > lastMessage.ts) {
+                    lastMessage = json;
+                }
+            }
+            await processMessagesWhenIdle();
+        }, 50); // Wait 50ms for additional messages to come in
+    }
+
+    async function changeField(message: any) {
+        if (message.params.field == lastField) return;
+
+        console.log(`Now on field ${message.params.field}`);
+        await dispatchVmix(message.params.field);
+
+        lastField = message.params.field;
+        lastChange = +new Date();
+        processing = false;
+    }
 }
 
 async function setup() {
