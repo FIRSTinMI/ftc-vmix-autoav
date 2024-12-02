@@ -1,6 +1,6 @@
 {
     "name": "fim-ftc-vmix-switcher",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "App to Control vMix Video Output from FTC Scorekeeper's API",
     "main": "dist/index.js",
     "scripts": {
